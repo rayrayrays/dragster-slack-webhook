@@ -1,13 +1,20 @@
 from typing import Callable, Dict, List, Optional, Union
-
-from dagster.core.definitions import GraphDefinition, PipelineDefinition
-from dagster.core.definitions.pipeline_sensor import (
-    PipelineFailureSensorContext,
-    RunFailureSensorContext,
-    pipeline_failure_sensor,
-    run_failure_sensor,
-)
 from slack_sdk import WebhookClient
+from dagster.core.definitions import GraphDefinition, PipelineDefinition
+try:
+    from dagster import (
+        PipelineFailureSensorContext,
+        RunFailureSensorContext,
+        pipeline_failure_sensor,
+        run_failure_sensor,
+    )
+except ImportError:
+    from dagster.core.definitions.pipeline_sensor import (
+        PipelineFailureSensorContext,
+        RunFailureSensorContext,
+        pipeline_failure_sensor,
+        run_failure_sensor,
+    )
 
 
 def _default_failure_message(context: PipelineFailureSensorContext) -> str:
